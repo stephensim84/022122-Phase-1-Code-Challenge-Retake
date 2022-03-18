@@ -1,39 +1,35 @@
-const flatdangoApi = "http://localhost:3000/films";
-const imgPoster = document.getElementById("poster");
-const movieTitle = document.getElementById("films");
-const movieShowing = document.getElementById("showing");
-const movieRunTime = document.getElementById("runtime");
-const movieInfo = document.getElementById("film-info");
-const movieShowTime = document.getElementById("showtime");
-const ticketNum = document.getElementById("ticket-num");
+const flatAPI = "http://localhost:3000/films";
+const poster = document.getElementById('poster')
+const movieTitle = document.getElementById('title')
+const movieDescription = document.getElementById('film-info')
+const movieRuntime = document.getElementById('runtime')
+const movieShowtime = document.getElementById('showtime')
+const buyButton = document.getElementById('buy-ticket')
+const ticketsRemaining = document.getElementById('ticket-num')
+const movieList = document.getElementsByClassName('film-item')
 
-
-
-fetch(flatdangoApi)
+fetch(flatAPI)
     .then((res) => res.json())
-    .then(renderMoviePics)
+    .then(renderMovieInfo)
+    .catch(console.error)
 
-function renderMoviePics(data){
+//document.getElementById("poster").addEventListener("submit", addPoster);
+
+ function renderMovieInfo(dataArray){
+        dataArray.forEach(addDataToPage)
     
-     
-    const div = document.createElement("div");
-    movieShowing.append("showing");
-
+ }
+function addDataToPage(poster){
+        const posterImage = document.createElement("img");
+        posterImage.src = poster.image;
         
-     data.forEach(element => {
-       const movie = document.importNode(movieShowing.content, true);
-        movie.imgPoster.src = data.poster;
-        movie.movieTitle.textContent = data.films;
-        movie.movieShowing.textContent = data.showing;
-        movie.movieRunTime.textContent = data.runtime;
-        movie.movieInfo.textContent = data.showtime
-        movie.movieShowTime.textContent = data.ticketssold;
-        movie.ticketNum.textContent = data.title;
-        renderMoviePics();
-
-
-
-         
-     });
-
+        posterImage.addEventListener("click", () => {
+            displayposterdetails(poster)
+        })
+          
+        poster.append(posterImage);
 }
+
+
+
+
